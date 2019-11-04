@@ -1,6 +1,7 @@
 package hello;
 
 import hello.dao.UserMapper;
+import hello.service.RankService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -13,11 +14,19 @@ public class HelloController {
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private RankService rankService;
+
     @RequestMapping("/")
     @ResponseBody
     public Object index() {
-
         return userMapper.getUserById(1);
+    }
+
+    @RequestMapping("/rank")
+    @ResponseBody
+    public Object rank() {
+        return rankService.doService();
     }
 
     @RequestMapping("/search")
