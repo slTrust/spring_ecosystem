@@ -1,12 +1,17 @@
 package hello;
 
 import hello.dao.UserMapper;
+import hello.entity.RankItem;
 import hello.service.RankService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import java.util.HashMap;
+import java.util.List;
 
 @RestController
 public class HelloController {
@@ -28,6 +33,17 @@ public class HelloController {
     public Object rank() {
         return rankService.doService();
     }
+
+    @RequestMapping("/rank2")
+    public ModelAndView rank2() {
+        List<RankItem> items = rankService.doService();
+        HashMap<String,Object> model = new HashMap<>();
+        model.put("items",items);
+        // 自动去 templates目录找 index.ftl
+        return new ModelAndView("index",model);
+    }
+
+
 
     @RequestMapping("/search")
     public String search(@RequestParam String q) {

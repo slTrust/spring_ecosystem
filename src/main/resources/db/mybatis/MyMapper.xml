@@ -14,7 +14,7 @@
 
     </select>
     <resultMap id="rankItem" type="hello.entity.RankItem">
-        <result property="score" column="score_num"/>
+        <result property="score" column="score_sum"/>
         <association property="user" javaType="hello.entity.User">
             <result property="id" column="user_id"/>
             <result property="name" column="user_name"/>
