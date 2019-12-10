@@ -10,4 +10,7 @@ mvn flyway:migrate
 初始化 h2数据库
 
 然后点击绿色运行按钮即可
+
+如果是 master 分支代码是有 redis 部分的所以要额外启动 redis 我这里用的docker 一句话完美运行
+docker run -p 6379:6379 --name some-redis -d redis
 ```
