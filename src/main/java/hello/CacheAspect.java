@@ -4,7 +4,9 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.core.RedisTemplate;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,7 +16,8 @@ import java.util.Map;
 @Aspect
 @Configuration
 public class CacheAspect {
-    Map<String,Object> cache = new HashMap<>();
+    @Autowired
+    RedisTemplate<String,Object> redisTemplate;
 
     @Around("@annotation(hello.anno.Cache)")
     public Object cache(ProceedingJoinPoint joinPoint) throws Throwable {
@@ -22,7 +25,7 @@ public class CacheAspect {
 
         MethodSignature signature = (MethodSignature)joinPoint.getSignature();
         String methodName = signature.getName();
-        Object cacheValue = cache.get(methodName);
+        Object cacheValue = redisTemplate.opsForValue().get(methodName);
 
         if(cacheValue != null){
             System.out.println("cacheValue");
@@ -30,7 +33,7 @@ public class CacheAspect {
         }else{
             System.out.println("read realValue");
             Object realValue = joinPoint.proceed();
-            cache.put(methodName,realValue);
+            redisTemplate.opsForValue().set(methodName,realValue);
             return realValue;
         }
 
