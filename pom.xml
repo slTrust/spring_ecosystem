@@ -53,6 +53,13 @@
             <artifactId>spring-boot-starter-freemarker</artifactId>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.17</version>
+        </dependency>
+
     </dependencies>
 
     <properties>
@@ -72,9 +79,9 @@
                 <artifactId>flyway-maven-plugin</artifactId>
                 <version>6.0.7</version>
                 <configuration>
-                    <url>jdbc:h2:file:${project.basedir}/target/test</url>
+                    <url>jdbc:mysql://localhost:3306/match</url>
                     <user>root</user>
-                    <password>root</password>
+                    <password>my-secret-pw</password>
                 </configuration>
             </plugin>
 
@@ -86,8 +93,6 @@
                     <executable>java</executable>
                     <arguments>
                         <argument>-classpath</argument>
-                        <!-- automatically creates the classpath using all project dependencies,
-                        also adding the project build directory -->
                         <classpath/>
                         <argument>hello.Application</argument>
                     </arguments>
